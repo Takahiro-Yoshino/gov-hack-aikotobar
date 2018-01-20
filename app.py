@@ -121,7 +121,9 @@ def handle_message(event):
     
     event_mst={"arrive1":"event1","arrive2":"event2"}
     
-    pos={"event1":("鶴ヶ城","〒965-0873福島県会津若松市追手町1-1",37.48772, 139.929794),"event2":("会津若松市役所","〒965-0035",37.48772,139.929794)}
+    pos={
+    "event1":("鶴ヶ城","〒965-0873福島県会津若松市追手町1-1",37.48772, 139.929794,"馬刺し一貫サービス"),
+    "event2":("会津若松市役所","〒965-0035",37.48772,139.929794,"飛露喜プレゼント")}
     if event.message.text in pos:
         line_bot_api.reply_message(
             event.reply_token,
@@ -132,11 +134,12 @@ def handle_message(event):
                     latitude  = pos[event.message.text][2],
                     longitude = pos[event.message.text][3]
                 )
+                TextSendMessage(text=pos[event.message.text][0]+"を訪れた方へ"+"先着"+str(r.get(event.message.text))+"名様に"+pos[event.message.text][4]+"!!")
             ]
         )
     
-    message1="クイズ：鶴ヶ城（会津城）の旧称はなんでしょう？"
-    message2="合言葉は「あかべぇ」です"
+    message1="合言葉は「ならぬことはならぬ」です。"
+    message2="クイズ：鶴ヶ城（会津城）の旧称はなんでしょう？"
     
     dist={"arrive1":("桜鍋 吉し多","〒965-0035福島県会津若松市東栄町5-14",37.494102,139.929993,message1,),"arrive2":("植木屋商店","〒965-0035福島県会津若松市馬場町1-35",37.497540,139.931335,message2)}
     eventtext=event.message.text
@@ -152,7 +155,7 @@ def handle_message(event):
                     latitude  = dist[event.message.text][2],
                     longitude = dist[event.message.text][3]
                 ),
-                TextSendMessage(text=dist[eventtext][4]+"締切人数まであと"+str(all_num)+"人です。")
+                TextSendMessage(text=dist[eventtext][4]+"  締切まであと"+str(all_num)+"人です。")
             ]
         )
         
