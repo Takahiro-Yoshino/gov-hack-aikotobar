@@ -141,8 +141,8 @@ def handle_message(event):
     dist={"arrive1":("桜鍋 吉し多","〒965-0035福島県会津若松市東栄町5-14",37.494102,139.929993,message1,),"arrive2":("植木屋商店","〒965-0035福島県会津若松市馬場町1-35",37.497540,139.931335,message2)}
     eventtext=event.message.text
     if event.message.text in dist:
-        r.decr(event_mst[event.message.text], 1)
-        #num=r.get(event_mst[event.message.text]).decode('utf-8')
+        all_num=r.decr(event_mst[event.message.text])
+        #all_num=r.get(event_mst[event.message.text]).decode('utf-8')
         line_bot_api.reply_message(
             event.reply_token,
             [
@@ -152,7 +152,7 @@ def handle_message(event):
                     latitude  = dist[event.message.text][2],
                     longitude = dist[event.message.text][3]
                 ),
-                TextSendMessage(text=dist[eventtext][4])
+                TextSendMessage(text=dist[eventtext][4]+"締切人数まであと"+str(all_num)+"人です。")
             ]
         )
         
