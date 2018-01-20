@@ -155,22 +155,6 @@ def handle_message(event):
             TextSendMessage(text=dist[event.message.text][4])
         )
 
-    if event.message.text in ['comment', 'review'] and r.hget(event.source.user_id, 'tmp') is not None:
-        r.hset(event.source.user_id, event.message.text, r.hget(event.source.user_id, 'tmp'))
-        r.hdel(event.source.user_id, 'tmp')
-        notifyBlankField(event)
-    else:
-        r.hset(event.source.user_id, 'tmp', event.message.text)
-        buttons_template = ButtonsTemplate(
-            text="Which field to store '%s'?" % event.message.text, actions=[
-                MessageTemplateAction(label='comment', text='comment'),
-                MessageTemplateAction(label='review', text='review')
-            ])
-        template_message = TemplateSendMessage(
-            alt_text='Alternative Text', template=buttons_template)
-        line_bot_api.reply_message(event.reply_token, template_message)
-
-
 
 if __name__ == "__main__":
     app.debug = True;
