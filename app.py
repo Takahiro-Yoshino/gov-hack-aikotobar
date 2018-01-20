@@ -137,6 +137,7 @@ def handle_message(event):
     message2="合言葉は「あかべぇ」です"
     
     dist={"arrive1":("桜鍋 吉し多","〒965-0035福島県会津若松市東栄町5-14",37.494102,139.929993,message1,),"arrive2":("植木屋商店","〒965-0035福島県会津若松市馬場町1-35",37.497540,139.931335,message2)}
+    eventtext=event.message.text
     if event.message.text in dist:
         line_bot_api.reply_message(
             event.reply_token,
@@ -152,7 +153,7 @@ def handle_message(event):
         #合言葉やクイズを返す
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=dist[event.message.text][4])
+            TextSendMessage(text=message1)
         )
 
 
