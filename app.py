@@ -135,7 +135,7 @@ def handle_message(event):
         #値取得
         r.hget("store_name", "A") 
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=r.hget("store_name", "A")))
-#       return
+        return
         
 
 
