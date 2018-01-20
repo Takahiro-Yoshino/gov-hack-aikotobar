@@ -23,18 +23,6 @@ import uuid
 import json
 import urllib.parse
 
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-    SourceUser, SourceGroup, SourceRoom,
-    TemplateSendMessage, ConfirmTemplate, MessageTemplateAction,
-    ButtonsTemplate, ImageCarouselTemplate, ImageCarouselColumn, URITemplateAction,
-    PostbackTemplateAction, DatetimePickerTemplateAction,
-    CarouselTemplate, CarouselColumn, PostbackEvent,
-    StickerMessage, StickerSendMessage, LocationMessage, LocationSendMessage,
-    ImageMessage, VideoMessage, AudioMessage, FileMessage,
-    UnfollowEvent, FollowEvent, JoinEvent, LeaveEvent, BeaconEvent
-)
-
 app = Flask(__name__)
 
 line_bot_api = LineBotApi(os.environ.get('CHANNEL_ACCESS_TOKEN'))
@@ -98,13 +86,13 @@ def handle_follow(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        LocationSendMessage(
-            title=event.message.title, address=event.message.address,
-            latitude=event.message.latitude, longitude=event.message.longitude
-        )
-    )
+
+    lat = event.message.latitude
+    lon = event.message.longitude
+
+    r.hmset(event.source.user_id, {'lat': lat, 'lon': lon})
+
+    notifyBlankField(event)
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
@@ -127,14 +115,29 @@ def handle_image(event):
 
     notifyBlankField(event)
 
+#メッセージ入力後
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text == 'show':
+    if event.message.text == 'イベント':
         result = ''
-        for h in r.keys('lm_*'):
-            result += (json.dumps(r.hgetall(h)) + "\n")
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-        return
+#        for h in r.keys('lm_*'):
+#            result += (json.dumps(r.hgetall(h)) + "\n")
+#        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
+#        return
+    
+        #値セット
+        r.hset("store_name", "A", 10)
+        r.hset("store_name", "B", 10)
+        
+        ＃減算
+        r.decr("store_name", "A")
+        
+        #値取得
+        r.hget("store_name", "A") 
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=r.hget("store_name", "A")))
+#       return
+        
+
 
     if event.message.text in ['comment', 'review'] and r.hget(event.source.user_id, 'tmp') is not None:
         r.hset(event.source.user_id, event.message.text, r.hget(event.source.user_id, 'tmp'))
