@@ -118,7 +118,9 @@ def handle_image(event):
 #メッセージ入力後
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-
+    
+    event_mst={"event1":"arrive1","event2":"arrie2"}
+    
     pos={"event1":("鶴ヶ城","〒965-0873福島県会津若松市追手町1-1",37.48772, 139.929794),"event2":("会津若松市役所","〒965-0035",37.48772,139.929794)}
     if event.message.text in pos:
         line_bot_api.reply_message(
@@ -135,10 +137,11 @@ def handle_message(event):
     
     message1="クイズ：鶴ヶ城（会津城）の旧称はなんでしょう？"
     message2="合言葉は「あかべぇ」です"
-    event
+    
     dist={"arrive1":("桜鍋 吉し多","〒965-0035福島県会津若松市東栄町5-14",37.494102,139.929993,message1,),"arrive2":("植木屋商店","〒965-0035福島県会津若松市馬場町1-35",37.497540,139.931335,message2)}
     eventtext=event.message.text
     if event.message.text in dist:
+    	r.decr(event_mst[event.message.text], 1)
         line_bot_api.reply_message(
             event.reply_token,
             [
@@ -151,7 +154,7 @@ def handle_message(event):
                 TextSendMessage(text=dist[eventtext][4])
             ]
         )
-
+        
 
 if __name__ == "__main__":
     app.debug = True;
