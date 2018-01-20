@@ -13,7 +13,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    ButtonsTemplate, MessageTemplateAction, TemplateSendMessage, FollowEvent, ImageMessage, LocationMessage, MessageEvent, TextMessage, TextSendMessage, StickerSendMessage
+    ButtonsTemplate, MessageTemplateAction, TemplateSendMessage, FollowEvent, ImageMessage, LocationMessage, LocationSendMessage,MessageEvent, TextMessage, TextSendMessage, StickerSendMessage
 )
 
 import redis
