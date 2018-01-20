@@ -129,7 +129,7 @@ def handle_message(event):
         r.hset("store_name", "A", 10)
         r.hset("store_name", "B", 10)
         
-        ＃減算
+        #減算
         r.decr("store_name", "A")
         
         #値取得
