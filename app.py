@@ -135,7 +135,7 @@ def handle_message(event):
     
     message1="クイズ：鶴ヶ城（会津城）の旧称はなんでしょう？"
     message2="合言葉は「あかべぇ」です"
-    
+    event
     dist={"arrive1":("桜鍋 吉し多","〒965-0035福島県会津若松市東栄町5-14",37.494102,139.929993,message1,),"arrive2":("植木屋商店","〒965-0035福島県会津若松市馬場町1-35",37.497540,139.931335,message2)}
     eventtext=event.message.text
     if event.message.text in dist:
@@ -147,13 +147,9 @@ def handle_message(event):
                     address   = dist[event.message.text][1],
                     latitude  = dist[event.message.text][2],
                     longitude = dist[event.message.text][3]
-                )
+                ),
+                TextSendMessage(text=dist[eventtext][4])
             ]
-        )
-        #合言葉やクイズを返す
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=message1)
         )
 
 
