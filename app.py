@@ -119,7 +119,7 @@ def handle_image(event):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     
-    event_mst={"event1":"arrive1","event2":"arrie2"}
+    event_mst={"arrive1":"event1","arrive2":"event2"}
     
     pos={"event1":("鶴ヶ城","〒965-0873福島県会津若松市追手町1-1",37.48772, 139.929794),"event2":("会津若松市役所","〒965-0035",37.48772,139.929794)}
     if event.message.text in pos:
@@ -142,7 +142,7 @@ def handle_message(event):
     eventtext=event.message.text
     if event.message.text in dist:
         r.decr(event_mst[event.message.text], 1)
-        num=r.get(event_mst[event.message.text]).decode('utf-8')
+        #num=r.get(event_mst[event.message.text]).decode('utf-8')
         line_bot_api.reply_message(
             event.reply_token,
             [
