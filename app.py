@@ -118,25 +118,6 @@ def handle_image(event):
 #メッセージ入力後
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text == 'イベント':
-        result = ''
-#        for h in r.keys('lm_*'):
-#            result += (json.dumps(r.hgetall(h)) + "\n")
-#        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=result))
-#        return
-    
-        #値セット
-        r.hset("store_name", "A", 10)
-        r.hset("store_name", "B", 10)
-        
-        #減算
-        r.decr("store_name", "A")
-        
-        #値取得
-        r.hget("store_name", "A") 
-        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=r.hget("store_name", "A")))
-        return
-        
 
     pos={"event1":("鶴ヶ城","〒965-0873福島県会津若松市追手町1-1",37.48772, 139.929794),"event2":("会津若松市役所","〒965-0035",37.48772,139.929794)}
     if event.message.text in pos:
