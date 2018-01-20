@@ -86,13 +86,13 @@ def handle_follow(event):
 
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
-
-    lat = event.message.latitude
-    lon = event.message.longitude
-
-    r.hmset(event.source.user_id, {'lat': lat, 'lon': lon})
-
-    notifyBlankField(event)
+    line_bot_api.reply_message(
+        event.reply_token,
+        LocationSendMessage(
+            title=event.message.title, address=event.message.address,
+            latitude=event.message.latitude, longitude=event.message.longitude
+        )
+    )
 
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image(event):
