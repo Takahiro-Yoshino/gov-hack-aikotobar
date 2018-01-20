@@ -133,7 +133,7 @@ def handle_message(event):
                     address   = pos[event.message.text][1],
                     latitude  = pos[event.message.text][2],
                     longitude = pos[event.message.text][3]
-                )
+                ),
                 TextSendMessage(text=pos[event.message.text][0]+"を訪れた方へ"+"先着"+str(r.get(event.message.text))+"名様に"+pos[event.message.text][4]+"!!")
             ]
         )
